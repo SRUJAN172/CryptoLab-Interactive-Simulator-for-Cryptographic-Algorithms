@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CryptoLab | Interactive Cryptography Simulator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">C</div>
+        <div>
+          <h1>CryptoLab</h1>
+          <p>Interactive cryptography studio</p>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#caesar" class="nav-link">Caesar Cipher</a>
+        <a href="#playfair" class="nav-link">Playfair Cipher</a>
+        <a href="#hill" class="nav-link">Hill Cipher</a>
+        <a href="#aes" class="nav-link">AES</a>
+        <a href="#des" class="nav-link">DES</a>
+        <a href="#rsa" class="nav-link">RSA</a>
+        <a href="#diffie-hellman" class="nav-link">Diffie-Hellman</a>
+        <a href="#sha256" class="nav-link">SHA-256</a>
+      </nav>
+      <div class="sidebar-note">
+        <h3>Learning Focus</h3>
+        <p>Each module includes quick examples, visual steps, and transformation highlights so students can connect theory to what happens inside an algorithm.</p>
+      </div>
+    </aside>
+
+    <main class="content">
+      <section id="home" class="panel hero-panel">
+        <div class="hero-grid">
+          <div>
+            <span class="eyebrow">Mini cryptography learning platform</span>
+            <h2>Explore classical and modern cryptographic algorithms through simulation.</h2>
+            <p class="lede">CryptoLab helps students learn by doing. Try inputs, compare outputs, and open internal visualizations that reveal how bytes, bits, matrices, and keys transform step by step.</p>
+            <div class="hero-actions">
+              <a class="button primary" href="#caesar">Start Learning</a>
+              <a class="button secondary" href="aes-internal.html">Open AES Internals</a>
+            </div>
+          </div>
+          <div class="hero-card diagram-card">
+            <div class="diagram-flow">
+              <div class="flow-node">Input</div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node">Rounds / Steps</div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node accent">Output</div>
+            </div>
+            <p>The platform emphasizes clarity: substitutions, permutations, XOR operations, and round progression are all shown visually.</p>
+          </div>
+        </div>
+
+        <div class="card-grid">
+          <a class="module-card" href="#caesar"><h3>Caesar Cipher</h3><p>Shift letters through the alphabet and watch every character move.</p></a>
+          <a class="module-card" href="#playfair"><h3>Playfair Cipher</h3><p>Build a 5×5 matrix, form digraphs, and encrypt pair by pair.</p></a>
+          <a class="module-card" href="#hill"><h3>Hill Cipher</h3><p>See matrix multiplication turn plaintext vectors into ciphertext.</p></a>
+          <a class="module-card" href="#aes"><h3>AES</h3><p>Use the main simulator, then dive into round-by-round internal implementation.</p></a>
+          <a class="module-card" href="#des"><h3>DES</h3><p>Encrypt with a Feistel-style demo and inspect permutations, XOR, and S-box flow.</p></a>
+          <a class="module-card" href="#rsa"><h3>RSA</h3><p>Generate keys from primes and trace encryption and decryption.</p></a>
+          <a class="module-card" href="#diffie-hellman"><h3>Diffie-Hellman</h3><p>Watch Alice and Bob exchange public values to reach one secret.</p></a>
+          <a class="module-card" href="#sha256"><h3>SHA-256</h3><p>Generate hashes and observe the avalanche effect.</p></a>
+        </div>
+      </section>
+
+      <section id="caesar" class="panel">
+        <div class="section-header">
+          <div><span class="eyebrow">Classical Cipher</span><h2>Caesar Cipher</h2></div>
+          <p>Each letter is shifted by a fixed number of positions in the alphabet.</p>
+        </div>
+        <div class="two-column">
+          <div class="content-card">
+            <h3>How it works</h3>
+            <p>The Caesar Cipher replaces every letter with another letter that appears a certain number of steps later in the alphabet. A shift of 3 turns A into D, B into E, and so on.</p>
+            <p class="tooltip-line">Term tip <span class="tooltip" data-tip="Plaintext is the original readable message before encryption.">Plaintext</span> becomes <span class="tooltip" data-tip="Ciphertext is the transformed output after encryption.">ciphertext</span> by applying a fixed shift key.</p>
+            <div class="form-grid">
+              <label>Plaintext<input id="caesar-text" type="text" placeholder="HELLO WORLD"></label>
+              <label>Shift<input id="caesar-shift" type="number" min="0" max="25" value="3"></label>
+            </div>
+            <div class="action-row">
+              <button class="button primary" id="caesar-encrypt">Encrypt</button>
+              <button class="button secondary" id="caesar-decrypt">Decrypt</button>
+              <button class="button ghost" id="caesar-example">Example</button>
+            </div>
+            <div class="output-box"><strong>Output:</strong> <span id="caesar-output">Your encrypted text will appear here.</span></div>
+          </div>
+          <div class="content-card">
+            <h3>Step-by-step shifting</h3>
+            <div id="caesar-steps" class="step-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="playfair" class="panel">
+        <div class="section-header">
+          <div><span class="eyebrow">Classical Cipher</span><h2>Playfair Cipher</h2></div>
+          <p>This algorithm encrypts letters in pairs using a 5×5 matrix built from a keyword.</p>
+        </div>
+        <div class="two-column">
+          <div class="content-card">
+            <h3>How it works</h3>
+            <p>Playfair combines letters into digraphs, then uses their positions in a keyword-based matrix to transform them. For education, I and J share one matrix cell.</p>
+            <div class="form-grid">
+              <label>Key<input id="playfair-key" type="text" placeholder="MONARCHY"></label>
+              <label>Plaintext<input id="playfair-text" type="text" placeholder="INSTRUMENTS"></label>
+            </div>
+            <div class="action-row">
+              <button class="button primary" id="playfair-encrypt">Encrypt</button>
+              <button class="button secondary" id="playfair-decrypt">Decrypt</button>
+              <button class="button ghost" id="playfair-example">Example</button>
+            </div>
+            <div class="output-box"><strong>Output:</strong> <span id="playfair-output">Matrix and digraph results will appear here.</span></div>
+          </div>
+          <div class="content-card">
+            <h3>Visual matrix</h3>
+            <div id="playfair-matrix" class="matrix-grid matrix-5"></div>
+            <h3>Digraph and step breakdown</h3>
+            <div id="playfair-steps" class="step-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="hill" class="panel">
+        <div class="section-header">
+          <div><span class="eyebrow">Classical Cipher</span><h2>Hill Cipher</h2></div>
+          <p>Hill Cipher uses linear algebra, converting letters into numbers and multiplying them by a key matrix.</p>
+        </div>
+        <div class="two-column">
+          <div class="content-card">
+            <h3>How it works</h3>
+            <p>For a 2×2 Hill Cipher, letters are grouped in pairs, converted to numbers, multiplied by the key matrix, and reduced modulo 26 to create ciphertext.</p>
+            <div class="form-grid matrix-input-grid">
+              <label>Plaintext<input id="hill-text" type="text" placeholder="HELP"></label>
+              <label>Key a<input id="hill-a" type="number" value="3"></label>
+              <label>Key b<input id="hill-b" type="number" value="3"></label>
+              <label>Key c<input id="hill-c" type="number" value="2"></label>
+              <label>Key d<input id="hill-d" type="number" value="5"></label>
+            </div>
+            <div class="action-row">
+              <button class="button primary" id="hill-encrypt">Encrypt</button>
+              <button class="button ghost" id="hill-example">Example</button>
+            </div>
+            <div class="output-box"><strong>Output:</strong> <span id="hill-output">Ciphertext will appear here.</span></div>
+          </div>
+          <div class="content-card">
+            <h3>Matrix multiplication view</h3>
+            <div id="hill-visual" class="visual-panel"></div>
+            <div id="hill-steps" class="step-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="aes" class="panel">
+        <div class="section-header">
+          <div><span class="eyebrow">Modern Block Cipher</span><h2>AES Encryption Demo</h2></div>
+          <p>This is a simplified educational walk-through of AES stages, designed to explain the idea rather than reproduce production-grade AES internals.</p>
+        </div>
+        <div class="two-column">
+          <div class="content-card">
+            <h3>How it works</h3>
+            <p>AES repeatedly transforms data using substitution, row shifting, column mixing, and key addition. Use the demo below, or open dedicated module and internal visualization pages.</p>
+            <div class="form-grid">
+              <label>Message<input id="aes-message" type="text" maxlength="16" placeholder="CRYPTOGRAPHY123"></label>
+              <label>Secret Key<input id="aes-key" type="text" maxlength="16" placeholder="SECUREKEY123456"></label>
+            </div>
+            <div class="action-row">
+              <button class="button primary" id="aes-run">Run Demo</button>
+              <button class="button ghost" id="aes-example">Example</button>
+              <a class="button secondary" href="aes.html">AES Main Page</a>
+              <a class="button secondary" href="aes-internal.html">View Internal Implementation</a>
+            </div>
+            <div class="output-box"><strong>Educational result:</strong> <span id="aes-output">Stage outputs will be summarized here.</span></div>
+          </div>
+          <div class="content-card">
+            <h3>Round stages</h3>
+            <div id="aes-stages" class="aes-stage-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="des" class="panel">
+        <div class="section-header">
+          <div><span class="eyebrow">Block Cipher</span><h2>DES Algorithm</h2></div>
+          <p>DES is a Feistel network that repeatedly applies permutations, expansion, XOR, substitution, and swapping across rounds.</p>
+        </div>
+        <div class="two-column">
+          <div class="content-card">
+            <h3>How it works</h3>
+            <p>DES takes a 64-bit block and processes it through an initial permutation, sixteen Feistel rounds, and a final permutation. This educational simulator keeps the flow clear and visual.</p>
+            <div class="form-grid">
+              <label>Plaintext<input id="des-text" type="text" maxlength="8" placeholder="SECURITY"></label>
+              <label>Key<input id="des-key" type="text" maxlength="8" placeholder="LABKEY12"></label>
+            </div>
+            <div class="action-row">
+              <button class="button primary" id="des-encrypt">Encrypt</button>
+              <button class="button secondary" id="des-decrypt">Decrypt</button>
+              <button class="button ghost" id="des-example">Example</button>
+              <a class="button secondary" href="des.html">DES Main Page</a>
+              <a class="button secondary" href="des-internal.html">View Internal Working</a>
+            </div>
+            <div class="output-box"><strong>Output:</strong> <span id="des-output">DES-style ciphertext will appear here.</span></div>
+          </div>
+          <div class="content-card">
+            <h3>DES visual explanation</h3>
+            <div id="des-steps" class="step-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="rsa" class="panel">
+        <div class="section-header">
+          <div><span class="eyebrow">Public-Key Cryptography</span><h2>RSA Algorithm Simulator</h2></div>
+          <p>RSA builds a public and private key pair from prime numbers, then uses modular arithmetic for encryption and decryption.</p>
+        </div>
+        <div class="two-column">
+          <div class="content-card">
+            <h3>How it works</h3>
+            <p>Choose two prime numbers, compute n and φ(n), select a public exponent e, then calculate the private exponent d. The message is encrypted with the public key and decrypted with the private key.</p>
+            <div class="form-grid">
+              <label>Prime p<input id="rsa-p" type="number" value="11"></label>
+              <label>Prime q<input id="rsa-q" type="number" value="13"></label>
+              <label>Numeric Message<input id="rsa-message" type="number" value="9"></label>
+            </div>
+            <div class="action-row">
+              <button class="button primary" id="rsa-run">Simulate RSA</button>
+              <button class="button ghost" id="rsa-example">Example</button>
+            </div>
+            <div class="output-box"><strong>RSA summary:</strong> <span id="rsa-output">Keys and ciphertext will appear here.</span></div>
+          </div>
+          <div class="content-card">
+            <h3>Step-by-step formulas</h3>
+            <div id="rsa-steps" class="step-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="diffie-hellman" class="panel">
+        <div class="section-header">
+          <div><span class="eyebrow">Key Exchange</span><h2>Diffie-Hellman Key Exchange</h2></div>
+          <p>Alice and Bob can agree on a shared secret over a public channel without sending the secret itself.</p>
+        </div>
+        <div class="two-column">
+          <div class="content-card">
+            <h3>How it works</h3>
+            <p>Both parties agree on a public prime and base. They keep their secret exponents private, exchange computed public values, and independently derive the same shared secret.</p>
+            <div class="form-grid">
+              <label>Public Prime (p)<input id="dh-prime" type="number" value="23"></label>
+              <label>Base (g)<input id="dh-base" type="number" value="5"></label>
+              <label>Alice Secret<input id="dh-alice" type="number" value="6"></label>
+              <label>Bob Secret<input id="dh-bob" type="number" value="15"></label>
+            </div>
+            <div class="action-row">
+              <button class="button primary" id="dh-run">Simulate Exchange</button>
+              <button class="button ghost" id="dh-example">Example</button>
+            </div>
+            <div class="output-box"><strong>Shared secret:</strong> <span id="dh-output">The common secret will appear here.</span></div>
+          </div>
+          <div class="content-card">
+            <h3>Alice and Bob flow</h3>
+            <div id="dh-diagram" class="dh-diagram"></div>
+            <div id="dh-steps" class="step-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sha256" class="panel">
+        <div class="section-header">
+          <div><span class="eyebrow">Cryptographic Hashing</span><h2>SHA-256 Hash Generator</h2></div>
+          <p>SHA-256 turns input data into a fixed-length 256-bit hash. Even tiny input changes create dramatically different outputs.</p>
+        </div>
+        <div class="two-column">
+          <div class="content-card">
+            <h3>How it works</h3>
+            <p>A hash function is one-way: it produces a digest but is not meant to be reversed. SHA-256 is widely used for integrity checking and digital signatures.</p>
+            <div class="form-grid">
+              <label>Input Text<input id="sha-text" type="text" placeholder="cryptography"></label>
+            </div>
+            <div class="action-row">
+              <button class="button primary" id="sha-run">Generate Hash</button>
+              <button class="button ghost" id="sha-example">Example</button>
+            </div>
+            <div class="output-box"><strong>SHA-256:</strong> <span id="sha-output">Your hash will appear here.</span></div>
+          </div>
+          <div class="content-card">
+            <h3>Avalanche effect</h3>
+            <div id="sha-avalanche" class="visual-panel"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

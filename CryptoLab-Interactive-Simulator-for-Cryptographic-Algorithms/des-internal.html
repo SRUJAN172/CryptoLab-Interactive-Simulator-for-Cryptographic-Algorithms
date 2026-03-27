@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CryptoLab | DES Internal Working</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page-content">
+    <div class="page-layout">
+      <section class="page-panel">
+        <div class="page-breadcrumb"><a href="index.html">Home</a> <span>→</span> <a href="des.html">DES Main Page</a> <span>→</span> <span>DES Internal Working</span></div>
+        <div class="page-header">
+          <div class="page-title">
+            <span class="eyebrow">Bit-Level Walkthrough</span>
+            <h2>DES Internal Working</h2>
+            <p>Step through the internal DES flow with custom input and key values. This page highlights initial permutation, splitting, expansion, XOR, S-box substitution, P permutation, and Feistel round swapping.</p>
+          </div>
+          <div class="page-actions">
+            <a class="button secondary" href="des.html">Back to DES Main Page</a>
+            <a class="button secondary" href="index.html#des">Home Section</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-panel">
+        <div class="input-visual-grid">
+          <div class="page-card">
+            <h3>Custom simulation input</h3>
+            <div class="form-grid">
+              <label>Plaintext<input id="des-plain" type="text" maxlength="8" placeholder="SECURITY"></label>
+              <label>Key<input id="des-key" type="text" maxlength="8" placeholder="LABKEY12"></label>
+            </div>
+            <div class="control-row">
+              <button class="button primary" id="des-build">Build Simulation</button>
+              <button class="button secondary" id="des-prev">Previous Step</button>
+              <button class="button secondary" id="des-next">Next Step</button>
+              <button class="button ghost" id="des-reset">Reset Simulation</button>
+              <button class="button ghost" id="des-example">Example</button>
+            </div>
+            <p class="progress-note" id="des-progress">Step 1 of 1</p>
+          </div>
+          <div class="page-card">
+            <h3>Feistel round rail</h3>
+            <div id="des-rounds" class="timeline-board"></div>
+            <p class="helper-text">The timeline below tracks how the block moves from L0, R0 through the sixteen rounds and into the final output.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-panel">
+        <div id="des-step" class="viz-stage"></div>
+      </section>
+    </div>
+  </main>
+  <script src="des-internal.js"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CryptoLab | AES Internal Implementation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page-content">
+    <div class="page-layout">
+      <section class="page-panel">
+        <div class="page-breadcrumb"><a href="index.html">Home</a> <span>→</span> <a href="aes.html">AES Main Page</a> <span>→</span> <span>AES Internal Implementation</span></div>
+        <div class="page-header">
+          <div class="page-title">
+            <span class="eyebrow">Round-by-Round Visualizer</span>
+            <h2>AES Internal Implementation</h2>
+            <p>Walk through a clear educational version of AES. Use your own input block and key, then move through each stage to see how substitution, shifting, mixing, and XOR transform the state.</p>
+          </div>
+          <div class="page-actions">
+            <a class="button secondary" href="aes.html">Back to AES Main Page</a>
+            <a class="button secondary" href="index.html#aes">Home Section</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-panel">
+        <div class="input-visual-grid">
+          <div class="page-card">
+            <h3>Custom simulation input</h3>
+            <div class="form-grid">
+              <label>Plaintext Block<input id="aes-plain" type="text" maxlength="16" placeholder="SECUREMESSAGE12"></label>
+              <label>Secret Key<input id="aes-key" type="text" maxlength="16" placeholder="CLASSROOMKEY890"></label>
+            </div>
+            <div class="control-row">
+              <button class="button primary" id="aes-build">Build Simulation</button>
+              <button class="button secondary" id="aes-prev">Previous Step</button>
+              <button class="button secondary" id="aes-next">Next Step</button>
+              <button class="button ghost" id="aes-reset">Reset Simulation</button>
+              <button class="button ghost" id="aes-example">Example</button>
+            </div>
+            <p class="progress-note" id="aes-progress">Step 1 of 1</p>
+          </div>
+          <div class="page-card">
+            <h3>Round progression</h3>
+            <div id="aes-rounds" class="timeline-board"></div>
+            <div class="legend-row">
+              <span class="legend-chip"><span class="legend-dot"></span>Current state</span>
+              <span class="legend-chip"><span class="legend-dot highlight"></span>Changed value</span>
+              <span class="legend-chip"><span class="legend-dot output"></span>Round output</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-panel">
+        <div id="aes-step" class="viz-stage"></div>
+      </section>
+    </div>
+  </main>
+  <script src="aes-internal.js"></script>
+</body>
+</html>

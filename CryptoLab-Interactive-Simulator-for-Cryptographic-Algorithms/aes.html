@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CryptoLab | AES Main Page</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page-content">
+    <div class="page-layout">
+      <section class="page-panel">
+        <div class="page-breadcrumb"><a href="index.html">Home</a> <span>→</span> <span>AES Main Page</span></div>
+        <div class="page-hero">
+          <div class="page-title">
+            <span class="eyebrow">Modern Block Cipher</span>
+            <h2>AES Main Page</h2>
+            <p>AES protects fixed-size blocks by applying repeated rounds of substitution, row shifting, column mixing, and key addition. This page gives students a focused simulator before they open the detailed round visualizer.</p>
+            <div class="page-actions">
+              <a class="button secondary" href="index.html#aes">Back to Home</a>
+              <a class="button primary" href="aes-internal.html">View Internal Implementation</a>
+            </div>
+          </div>
+          <div class="diagram-card">
+            <div class="process-rail">
+              <div class="process-node">State</div>
+              <div class="process-arrow">→</div>
+              <div class="process-node">Round Transform</div>
+              <div class="process-arrow">→</div>
+              <div class="process-node accent">Secure Output</div>
+            </div>
+            <p class="helper-text">AES works on a 4×4 byte matrix called the state. Each round spreads information so one byte influences many other bytes.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-panel">
+        <div class="page-grid">
+          <div class="page-card">
+            <h3>Try the AES simulator</h3>
+            <p>Enter a short message and a 16-character key. The simulator below uses a simplified educational AES-style flow to make each stage easy to understand.</p>
+            <div class="form-grid">
+              <label>Message<input id="aes-message" type="text" maxlength="16" placeholder="SECUREMESSAGE12"></label>
+              <label>Secret Key<input id="aes-key" type="text" maxlength="16" placeholder="CLASSROOMKEY890"></label>
+            </div>
+            <div class="action-row">
+              <button class="button primary" id="aes-run">Encrypt</button>
+              <button class="button ghost" id="aes-example">Example</button>
+              <a class="button secondary" href="aes-internal.html">View Internal Implementation</a>
+            </div>
+            <div class="output-box"><strong>Output:</strong> <span id="aes-output">Run the demo to see the transformed state.</span></div>
+          </div>
+          <div class="page-card">
+            <h3>Why AES matters</h3>
+            <div class="highlight-strip">
+              <div class="info-strip"><strong>SubBytes</strong><span>Nonlinear substitution breaks simple patterns.</span></div>
+              <div class="info-strip"><strong>ShiftRows</strong><span>Moves bytes across columns to spread information.</span></div>
+              <div class="info-strip"><strong>MixColumns</strong><span>Blends bytes so each output depends on multiple inputs.</span></div>
+              <div class="info-strip"><strong>AddRoundKey</strong><span>Combines the state with secret round key material using XOR.</span></div>
+            </div>
+          </div>
+        </div>
+        <div id="aes-stages" class="aes-stage-list"></div>
+      </section>
+    </div>
+  </main>
+  <script src="aes-page.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CryptoLab | DES Main Page</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page-content">
+    <div class="page-layout">
+      <section class="page-panel">
+        <div class="page-breadcrumb"><a href="index.html">Home</a> <span>→</span> <span>DES Main Page</span></div>
+        <div class="page-hero">
+          <div class="page-title">
+            <span class="eyebrow">Feistel Network</span>
+            <h2>DES Main Page</h2>
+            <p>DES transforms a 64-bit block through permutations and repeated Feistel rounds. This page offers a simple simulator, while the internal page reveals how bit blocks move across each round.</p>
+            <div class="page-actions">
+              <a class="button secondary" href="index.html#des">Back to Home</a>
+              <a class="button primary" href="des-internal.html">View Internal Working</a>
+            </div>
+          </div>
+          <div class="diagram-card">
+            <div class="process-rail">
+              <div class="process-node">Initial Permutation</div>
+              <div class="process-arrow">→</div>
+              <div class="process-node">Feistel Rounds</div>
+              <div class="process-arrow">→</div>
+              <div class="process-node accent">Final Output</div>
+            </div>
+            <p class="helper-text">DES expands, XORs, substitutes, permutes, and swaps halves to progressively scramble data.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-panel">
+        <div class="page-grid">
+          <div class="page-card">
+            <h3>Try the DES simulator</h3>
+            <p>Enter up to 8 characters for plaintext and key. This simulator uses an educational DES-style flow so students can inspect the main structure without getting lost in bit-level bookkeeping.</p>
+            <div class="form-grid">
+              <label>Plaintext<input id="des-text" type="text" maxlength="8" placeholder="SECURITY"></label>
+              <label>Key<input id="des-key" type="text" maxlength="8" placeholder="LABKEY12"></label>
+            </div>
+            <div class="action-row">
+              <button class="button primary" id="des-encrypt">Encrypt</button>
+              <button class="button secondary" id="des-decrypt">Decrypt</button>
+              <button class="button ghost" id="des-example">Example</button>
+              <a class="button secondary" href="des-internal.html">View Internal Working</a>
+            </div>
+            <div class="output-box"><strong>Output:</strong> <span id="des-output">Run the simulator to generate the bit output.</span></div>
+          </div>
+          <div class="page-card">
+            <h3>DES concepts</h3>
+            <div class="highlight-strip">
+              <div class="info-strip"><strong>Permutation</strong><span>Bits are rearranged into a new order.</span></div>
+              <div class="info-strip"><strong>Expansion</strong><span>The right half grows from 32 bits to 48 bits.</span></div>
+              <div class="info-strip"><strong>S-boxes</strong><span>6-bit groups shrink to 4-bit outputs.</span></div>
+              <div class="info-strip"><strong>Feistel swap</strong><span>Halves trade roles after each round.</span></div>
+            </div>
+          </div>
+        </div>
+        <div id="des-steps" class="step-list"></div>
+      </section>
+    </div>
+  </main>
+  <script src="des-page.js"></script>
+</body>
+</html>
